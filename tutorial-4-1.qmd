@@ -1,0 +1,1402 @@
+---
+title: Tutorial 4.1 - Answers
+format:
+  html: default
+  pdf: default
+editor: source
+---
+
+::: {.callout-tip}
+## N.B.
+
+Anything in <span style="color:red;">red</span> is to be adapted and replaced in the answers below (e.g., substitute with your own username). 
+
+Amazon WorkSpace provides a remote virtual desktop which simulates a MS Windows keyboard layout. Mac users should use the following keyboard combinations for special characters:
+
+- To type `\`, simultaneously press `` ` `` (next to the Return left Shift key).
+- To type `#`, simultaneously press `\` (next to the Return left Shift key).
+- To type `~`, simultaneously press `Shift` and `\` (next to the Return key).
+- To type `|`, simultaneously press `Shift` and `` ` `` (next to the Return left Shift key).
+
+For all users:
+
+- The keyboard shortcut for copying text is `Control` and `Shift` and `C`.
+- The keyboard shortcut for pasting text is `Control` and `Shift` and `V`.
+:::
+
+## Exercise 4.1.1
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.1.1 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+## Exercise 4.1.1.1
+
+::: {.callout-caution}
+## Task
+
+Log into the Genomics England Amazon WorkSpace following instructions at <https://re-docs.genomicsengland.co.uk/access/>.
+Once logged in the Amazon WorkSpace, start the `Terminal Emulator` application.
+All of the following tasks take place in the Terminal application.
+:::
+
+Launch the Amazon WorkSpaces app.
+
+Enter the registration code received from GE Service Notifications <ge-servicenotifications@genomicsengland.co.uk>.
+
+Fill in your GEL username (not your email).
+
+Fill in the MFA code displayed by Okta Verify app (code changes every 30s).
+
+Click the `Sign In` button. Wait a moment for the virtual desktop to load in your web browser.
+
+In the virtual desktop, double click the `Terminal Emulator`.
+
+## Exercise 4.1.1.2
+
+::: {.callout-caution}
+## Task
+
+Establish your current location in the file system (the full path to your starting location when you log in).
+:::
+
+In the Terminal application, type:
+
+```bash
+pwd
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `pwd` command stands for prints working directory, and display the directory where the Terminal session is currently located.
+:::
+
+## Exercise 4.1.1.3
+
+::: {.callout-caution}
+## Task
+
+List all the files and directories in your current folder (including hidden files).
+:::
+
+In the Terminal application, type:
+
+```bash
+ls -a
+```
+
+Then, press the `Return` key.
+
+::: {.callout-note}
+## Learn more
+
+The `ls` command lists files in the current directory.
+
+The `-a` option requests that all files be listed, including hidden files (file names that begin with `.` are generally hidden).
+:::
+
+## Exercise 4.1.1.4
+
+::: {.callout-caution}
+## Task
+
+Change in the course directory `~/re_gecip/oxford_precision_cancer/`.
+:::
+    
+In the Terminal application, type:
+
+```bash
+cd ~/re_gecip/oxford_precision_cancer/
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `cd` command stands for change directory.
+The commands takes the path of a directory that already exists on the system, and changes the working directory of your Terminal session to that directory.
+
+The `~` symbol represent your home directory on the system. For instance, `/home/username`.
+
+If you have multiple Terminal sessions open, each session has its own working directory, and changing the working in one session does not affect the other sessions.
+:::
+
+## Exercise 4.1.1.5
+
+::: {.callout-caution}
+## Task
+
+Create a new directory with your username. Then, change directory into it.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+mkdir $USER
+cd $USER
+```
+
+Press the return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+The `mkdir` command stands for make directory.
+The commands takes the name of a directory to create, and creates it in the working directory of the Terminal session.
+
+The `$USER` environment variable is different for each user; it takes the value of the username for the active user.
+
+Next, the `cd` command is used to change directory into the newly created directory.
+:::
+
+## Exercise 4.1.1.6
+
+::: {.callout-caution}
+## Task
+
+Copy the file `~/re_gecip/oxford_precision_cancer/resources/linux/manpage.txt` to your personal directory.
+:::
+
+In the Terminal application, type:
+
+```bash
+cp ~/re_gecip/oxford_precision_cancer/resources/linux/manpage.txt .
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `cp` command stands for copy.
+The command takes two arguments.
+First, the location of an existing file.
+Second, the location of a directory where the copy should be made.
+
+The `.` symbol alone represents the current directory.
+In this context, it requests that the copy is made in the current directory.
+At this point in the exercise, the current directory should be your personal directory.
+:::
+
+## Exercise 4.1.1.7
+
+::: {.callout-caution}
+## Task
+
+View the file manpage.txt on the command line (try cat, more, less, head and tail)
+:::
+
+In the Terminal application, type successively:
+```bash
+cat manpage.txt
+head manpage.txt
+tail manpage.txt
+more manpage.txt
+less manpage.txt
+```
+
+Press the Return key after each command and inspect the output.
+
+::: {.callout-note}
+## Learn more
+
+The `cat` command concatenates files (one or more) and prints their contents on the standard output.
+The standard output is one of the sources of information that display their contents in the Terminal application as a result of the commands that are run in that session.
+
+The `head` command prints the first part of files on the standard output.
+This can be particularly helpful to preview the first few lines of large files.
+
+The `tail` command prints the last part of files on the standard output.
+The logic is very much the same as the `head` command.
+
+The `more` command opens a program for interactive perusal of files in the Terminal application.
+Some functionality allows users to navigate the file one screensful at a time, display line number, etc.
+To leave the program, either read the file all the way to the end or press the `Q` key.
+
+The `less` command opens a program similar to `more` but with many more features.
+The `less` command is largely preferred over the `more` command. To leave the program press the `Q` key.
+:::
+
+## Exercise 4.1.1.8
+
+::: {.callout-caution}
+## Task
+
+Change the permission of your manpage.txt file so that it has read permissions for all users.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+ls -lhF
+chmod ugo+r manpage.txt
+ls -lhF
+```
+
+Press the Return key after each command and inspect the output.
+
+::: {.callout-note}
+## Learn more
+
+The `ls -lhF` command lists files:
+
+- In long format (one file per line), using the option `-l`
+- In human-reaable format (file size including units), using the option `-h`
+- Indicating the type of each file by a symbol, using the option `-F` (types include file, directory, link, etc).
+:::
+
+## Exercise 4.1.1.9
+
+::: {.callout-caution}
+## Task
+
+Create a new directory called test within your personal directory.
+:::
+
+In the Terminal application, type:
+
+```bash
+mkdir test
+```
+
+Then, press the Return key.
+
+## Exercise 4.1.1.10
+
+::: {.callout-caution}
+## Task
+
+Change into the test directory and make a copy of `manpage.txt` called `copy.txt` in the `test/` directory.
+:::
+
+In the Terminal application, type:
+
+```bash
+cd test
+cp ../manpage.txt copy.txt
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `cp` command can name the copy of the file differently from the original file name.
+
+The `..` alias stands for the parent directory of the working directory.
+
+If the second argument of the command refers to a location that does not currently exist on the system, the command will take it as the name of the new copy of the file.
+:::
+
+## Exercise 4.1.1.11
+
+::: {.callout-caution}
+## Task
+
+Open `copy.txt` in a terminal text editor (e.g. `nano`) and remove the synopsis lines.
+:::
+
+In the Terminal application, type:
+
+```bash
+nano copy.txt
+```
+
+Then, press the Return key.
+
+While, in the interactive application:
+
+- Press the `Control` and `K` keys simultaneously to cut the line on which the cursor is located.
+
+To quit the application:
+
+- Press the `Control` and `X` keys simultaneously to initiate the exit.
+- When prompted to exit, press the key `Y` to confirm.
+- When presented with the file name to save, press the `Return` key to confirm.
+
+::: {.callout-note}
+## Learn more
+
+The `nano` program can be used to edit text files within the Terminal application.
+The program has many features and keyboard shortcuts that take time to learn but make it an extremely efficient method to rapidly write and edit text files.
+:::
+
+## Exercise 4.1.1.12
+
+::: {.callout-caution}
+## Task
+
+Rename the file to `edit.txt`.
+:::
+
+In the Terminal application, type:
+
+```bash
+mv copy.txt edit.txt
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `mv` command stands for move. That being said, renaming a file is akin to moving the contents of the file from one file name to another.
+:::
+
+## Exercise 4.1.1.13
+
+::: {.callout-caution}
+## Task
+
+Remove `edit.txt` and the test directory.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+rm edit.txt
+cd ..
+rmdir test
+```
+
+Or:
+
+```bash
+cd ..
+rm –r test
+```
+
+Either way, press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+The `rm` command stands for remove.
+It can be used to remove files and directories.
+The `rmdir` command stands for remove directory.
+The `rmdir` command can only be used on empty directories.
+
+In the first example, the `rm` command is used to remove the text file that is present in the working directory.
+Then, the `cd` command is used to change directory to the parent directory.
+Finally, the `rmdir` command is used to remove the now-empty `test` directory.
+
+In the second example, the `cd` command is used to immediately change directory to the parent directory.
+Then the `rm` command is used with the `-r` option to recursively remove the `test` directory as well as all its contents (including the `edit.txt` file).
+:::
+
+## Exercise 4.1.2
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.1.2 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+## Exercise 4.1.2.1
+
+::: {.callout-caution}
+## Task
+
+Copy the tar archive `~/re_gecip/oxford_precision_cancer/resources/linux/genes.tar.gz` to your personal course folder (`~/re_gecip/oxford_precision_cancer/$USER`).
+:::
+
+In the Terminal application, adapt the following commands as needed and type successively:
+
+```bash
+cd ~/re_gecip/oxford_precision_cancer/$USER
+cp ~/re_gecip/oxford_precision_cancer/resources/linux/genes.tar.gz .
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+First, set the working directory to your personal course folder.
+Then, copy the file to the working directory (which you just set).
+:::
+
+## Exercise 4.1.2.2
+
+::: {.callout-caution}
+## Task
+
+Extract and decompress the archive
+:::
+
+In the Terminal application, type:
+
+```bash
+tar -xzf genes.tar.gz
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `tar` command is an archiving utility that can be used to compress or decompress files:
+
+- The `-x` option extracts compressed files from a compressed archive.
+- The `-z` option uses the `gzip` algorithm for decompression.
+- The `-f` option declares the file that contains the compressed archive.
+:::
+
+## Exercise 4.1.2.3
+
+::: {.callout-caution}
+## Task
+
+Count the number of lines in each text file using a single command
+:::
+
+In the Terminal application, type:
+
+```bash
+wc -l *.tsv
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `wc` command is a utility that can print the number of lines, words, and byte counts in files.
+
+The `-l` option requests the count of lines in each file.
+
+The `*` symbol matches any set of characters in file names.
+
+As a result, the regular expression `*.tsv` matches all the file names that end with `.tsv` in the working directory.
+:::
+
+## Exercise 4.1.2.4
+
+::: {.callout-caution}
+## Task
+
+Head the file grch38.tsv then compress in place and head the compressed file
+
+What do you notice about the compressed file?
+:::
+    
+In the Terminal application, type successively:
+
+```bash
+head grch38.tsv
+gzip grch38.tsv
+ls
+head grch38.tsv.gz
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+First, the `head` command is used to print the first part of the original file.
+
+Then, the `gzip` command is used to compress the file.
+Implicitely, this removes the original file and adds the extension `.gz` to the name of the compressed file.
+
+Next, the `ls` command is used to examine the list of files in the working directory.
+
+Finally, the `head` command is used again to examine the first part of the compressed file.
+
+The compressed file looks like gibberish as it is not meant to be human readable anymore.
+:::
+
+## Exercise 4.1.2.5
+
+::: {.callout-caution}
+## Task
+
+Decompress the file grch38.tsv in place
+:::
+
+In the Terminal application, type:
+
+```bash
+gunzip grch38.tsv.gz
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `gunzip` command is used to decompress compressed archive files.
+Implicitely, the command removes the compressed file after execution, and also removes the `.gz` extension from the decompressed file.
+:::
+
+## Exercise 4.1.2.6
+
+::: {.callout-caution}
+## Task
+
+Extract all the lines in `grch38.tsv` containing genes on chromosome 5 to a new file called `chr5.tsv`.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+grep chr5 grch38.tsv > chr5.tsv
+head chr5.tsv
+tail chr5.tsv
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+First, the `grep` command is used to extract lines that contain the pattern `chr5` in the file.
+The result is written to a new file. Then, the `head` and `tail` commands are used to inspect the first and last parts of the new file.
+:::
+
+## Exercise 4.1.2.7
+
+::: {.callout-caution}
+## Task
+
+Extract all of the entries EXCEPT those on chromosome 5 to another file called `nochr5.tsv`.
+
+How can you check that this command has worked?
+:::
+    
+In the Terminal application, type successively:
+
+```bash
+grep -v chr5 grch38.tsv > nochr5.tsv
+wc -l *.tsv
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+The `-v` option is used to invert the behaviour of the `grep` command, returning all the lines that do NOT match the pattern `chr5`.
+The result is saved in a new file.
+
+Next, the `wc` command is used to display the number of lines in all files with the extension `.tsv`.
+:::
+
+## Exercise 4.1.2.8
+
+::: {.callout-caution}
+## Task
+
+With the `grch38.tsv` file count how many genes are on each chromosome using line of code
+
+Hint: you will need to pipe together 3 commands
+:::
+
+In the Terminal application, type:
+
+```bash
+cut -f 1 grch38.tsv | sort | uniq -c
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `cut` command is used with the `-f` option and value `1` to extract the first column of the file.
+The result is passed to the `sort` command, which arranges the lines in alphanumeric order.
+
+The result is again passed to the `uniq` command with the `-c` option, to count the number of unique lines.
+
+The `sort` command is essential prior to the the `uniq` command, as the latter only adds up consecutive occurrences of the same value.
+In other words, if the values were not sorted, the `uniq` command may start counting from 1 multiple times for the same values.
+:::
+
+## Exercise 4.1.2.9
+
+::: {.callout-caution}
+## Task
+
+Find all occurrences of `chr` in `grch38.tsv` and replace with `chrom`, store the result in the file `grch38_chrom.tsv`.
+:::
+
+In the Terminal application, type:
+
+```bash
+sed 's/chr/chrom/' grch38.tsv > grch38_chrom.tsv
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `sed` command is used here.
+
+The first argument to the function supplies three pieces of information, each separated by the `/` symbol:
+
+- `s` requests to substitute a pattern by another
+- `chr` is the pattern to replace
+- `chrom` is the replacement
+
+The second argument is the name of the file that should be processed for the substitution.
+
+Finally, the result of the substitution is written to a different file.
+:::
+
+## Exercise 4.1.2.10
+
+::: {.callout-caution}
+## Task
+
+Create a copy of `grch38.tsv` which is comma rather than tab delimited (i.e., `.csv`).
+:::
+
+In the Terminal application, type:
+
+```bash
+sed 's/\t/,/g' grch38.tsv > grch38.csv
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+Similarly, the `sed` command is used here to replace tabulation symbols (represented by `\t` in code) by the `,` symbol.
+
+Again, the result is written to a different file (note the different file extension, `tsv` for the input file and `csv` for the output file.
+:::
+
+## Exercise 4.1.2.11
+
+::: {.callout-caution}
+## Task
+
+Insert `chr` at the start of every line in `grch37.tsv`.
+:::
+
+In the Terminal application, type:
+
+```bash
+sed 's/^/chr/' grch37.tsv > grch37_chr.tsv
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+Again, the `sed` command is used, here to replace the "start of line" character (represented by the `^` symbol in code) by the string `chr`.
+
+Once more, the result is written to a new file.
+:::
+
+## Exercise 4.1.2.12
+
+::: {.callout-caution}
+## Task
+
+Find all the VCF files in the folder ~/public_data_resources/Rpackage
+
+How many are there?
+:::
+    
+In the Terminal application, type:
+
+```bash
+find ~/public_data_resources/Rpackages/ -type f -name *.vcf | wc -l
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `find` command is used to find files, using the `-type` option with value `f`, with names ending in `.vcf` (using the option `-name ` with the regular expression `*.vcf`).
+The command returns one file per line.
+
+The result is passed to the `wc` command with option `-l` to count the number of files found.
+The last time we ran this command, the result was 41.
+:::
+
+## Exercise 4.1.2.13
+
+::: {.callout-caution}
+## Task
+
+Find all the `.gtf.gz` files in the folder `~/public_data_resources/ensembl_cds` and count the number of lines in each file.
+:::
+
+In the Terminal application, type:
+
+```zsh
+find ~/public_data_resources/ensembl_cds/ -name *.gtf.gz -exec wc -l {} \;
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+Similarly, the `find` command is used to find all the file names ending in `.gtf.gz`.
+
+The, `-exec` option is used to run a command on each file found.
+
+Specifically, the `{}` symbol is substituted by each file name in turn, meaning that the command `wc -l` is used to count the number of lines in each file.
+
+The final `\;` is always required to conclude the command supplied to the `-exec` option.
+
+The last time we ran this command, nearly 20 files were found, with number of lines ranging from tens to hundreds of thousands.
+:::
+
+## Exercise 4.1.3
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.1.3 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+## Exercise 4.1.3.1
+
+::: {.callout-caution}
+## Task
+
+Start a new process using the sleep command, make the process run for ten minutes.
+:::
+
+In the Terminal application, type:
+
+```bash
+sleep 600
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `sleep` command is given the number of seconds that the process is requested to wait for.
+:::
+
+## Exercise 4.1.3.2
+
+::: {.callout-caution}
+## Task
+
+Pause the process and send it to the background.
+:::
+
+While in the Terminal application:
+
+- Press the `Control` and `Z` keys simultaneously to pause the process.
+
+Then, type:
+
+```bash
+bg
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `bg` command is used to move jobs to the background. Those jobs continue to run without while the Terminal prompt remains available to type new commands.
+:::
+
+## Exercise 4.1.3.3
+
+::: {.callout-caution}
+## Task
+
+Check the status of running processes.
+:::
+
+In the Terminal application, type:
+
+```bash
+ps
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `ps` command is used to report a snapshot of currently running processes.
+:::
+
+## Exercise 4.1.3.4
+
+::: {.callout-caution}
+## Task
+
+Start a new sleep process in the background, make the process run for five minutes.
+:::
+
+In the Terminal application, type:
+
+```bash
+sleep 300 &
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The `&` symbol is used to immediately move the process running a command to the background, without the need to invoke the `bg` command.
+:::
+
+## Exercise 4.1.3.5
+
+::: {.callout-caution}
+## Task
+
+Kill the first process.
+:::
+
+In the Terminal application, type:
+
+```bash
+ps
+```
+
+Then, press the Return key.
+
+Identify the process identifier (pid) of the first job, then adapt the following command, replacing `JOB_PID` by the pid of the job to kill:
+
+```bash
+kill JOB_PID
+```
+
+Then, press the Return key.
+
+At this point, you can run the `ps` command one more time to confirm that only one job is left running.
+
+::: {.callout-note}
+## Learn more
+
+The kill command is used to terminate a process.
+
+The first argument of the command is the identifier of the job to kill.
+:::
+
+## Exercise 4.1.3.6
+
+::: {.callout-caution}
+## Task
+
+Bring the second process to the foreground and terminate it.
+:::
+
+In the Terminal application, type:
+
+```bash
+fg
+```
+
+Then, press the Return key.
+
+While the prompt is busy running the command:
+
+- Press the `Control` and `C` keys simultaneously to interrupt the command.
+
+::: {.callout-note}
+## Learn more
+
+The combination of `Control` and `C` is used to terminate commands that are currently running in the foreground of a Terminal session.
+:::
+
+## Exercise 4.1.3.7
+
+::: {.callout-caution}
+## Task
+
+Start three sleep processes and kill them all by name using a single command.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+sleep 300 &
+sleep 400 &
+sleep 500 &
+killall sleep
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+The `killall` command is used to terminate processes by name.
+
+Here it is used to simultaneously terminate all jobs running the command `sleep`.
+:::
+
+## Exercise 4.1.3.8
+
+::: {.callout-caution}
+## Task
+
+Look for all the processes for your username using `htop`.
+:::
+
+In the Terminal application, type:
+
+```bash
+htop
+```
+
+Then, press the Return key.
+
+While, in the interactive application:
+
+- Press the `U` key to move to the user selection
+- Use the arrow keys to highlight your username
+- Press the Return key to select your username
+
+To quit the application:
+
+- Press the `Q` key.
+
+## Exercise 4.1.3.9
+
+::: {.callout-caution}
+## Task
+
+In `htop` sort the process table by memory usage.
+:::
+
+In the Terminal application, type:
+
+```bash
+htop
+```
+
+Then, press the Return key.
+
+While, in the interactive application:
+
+- Click on the `MEM%` column header
+
+The default sorting is in descending order, which is what we want.
+
+To invert the order, click on the `MEM%` column header again.
+
+To quit the application:
+
+- Press the `Q` key.
+
+## Exercise 4.1.3.10
+
+::: {.callout-caution}
+## Task
+
+Find the total memory usage, total tasks and running tasks on the server.
+:::
+
+In the Terminal application, type:
+
+```bash
+htop
+```
+
+Then, press the Return key.
+
+In the interactive application, in the top section, the total memory usage is shown as the `Mem` bar, and the number of tasks (total and running) are stated in the `Tasks` section, and `running` subsection, respectively.
+
+To quit the application:
+
+- Press the `Q` key.
+
+## Exercise 4.1.3.11
+
+::: {.callout-caution}
+## Task
+
+Profile how long the wc -l command takes to run on grch38.tsv.
+:::
+
+In the Terminal application, type:
+
+```bash
+/usr/bin/time -v wc -l grch38.tsv
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The command `/usr/bin/time` is used to profile and summarise the system resources used by commands.
+
+In this case, the command profiled is `wc -l grch38.tsv`.
+
+The option `-v` is used to make the `/usr/bin/time` command more verbose, printing as much information as possible.
+:::
+
+## Exercise 4.1.3.12
+
+::: {.callout-caution}
+## Task
+
+Check the total disk usage in your personal course folder.
+:::
+
+In the Terminal application, type:
+
+```bash
+du -hs
+```
+
+Then, press the Return key.
+
+::: {.callout-note}
+## Learn more
+
+The command `du` estimates file space usage in the working directory.
+
+The option `-h` makes numbers human readable (adding units), and the option `-s` summarises the total disk usage, adding all files in the working directory.
+
+At this point in the exercises, your disk usage should be approximately 22 Megabytes.
+:::
+
+## Exercise 4.1.4
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.1.4 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+## Exercise 4.1.4.1
+
+::: {.callout-caution}
+## Task
+
+Create a `.bashrc` file in your home directory using a terminal text editor (e.g. `nano`) and add the alias `la='ls -alhF'`.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+cd
+nano .bashrc
+```
+
+Press the Return key after each command.
+
+In the interactive text editor, add the line:
+
+```bash
+alias la='ls -alhF'
+```
+
+Then exit the program and save the file, as you have done previously, reminder:
+
+- Press the `Control` and `X` keys simultaneously to initiate the exit.
+- When prompted to exit, press the key `Y` to confirm.
+- When presented with the file name to save, press the `Return` key to confirm.
+
+::: {.callout-note}
+## Learn more
+
+The command `cd` without argument sets the working directory to your home directory.
+
+The command `nano` is used to launch an interactive Terminal text editor, to edit the file `.bashrc` in the working directory.
+:::
+
+## Exercise 4.1.4.2
+
+::: {.callout-caution}
+## Task
+
+Add another alias to provide a shortcut to your personal course directory.
+:::
+
+Similarly, add the following line to your `.bashrc` file:
+
+```bash
+alias pcm='cd ~/re_gecip/oxford_precision_cancer/$USER/; pwd; ls'
+```
+
+## Exercise 4.1.4.3
+
+::: {.callout-caution}
+## Task
+
+Open a new terminal and check that your new aliases work.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+la
+pcm
+```
+
+Press the Return key after each command.
+
+## Exercise 4.1.4.4
+
+::: {.callout-caution}
+## Task
+
+Create a file `.inputrc` in your home directory using terminal text editor and add key mapping for reverse history search.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+cd
+nano .inputrc
+```
+
+In the interactive text editor, add the lines:
+
+```bash
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+```
+
+Then exit the program and save the file.
+
+## Exercise 4.1.4.5
+
+::: {.callout-caution}
+## Task
+
+Open a new terminal and check if the reverse history search key mappings work.
+:::
+
+In the Terminal application:
+
+- Start typing the first few characters of a command that you ran earlier.
+- Press the up arrow key to find the previous command.
+
+## Exercise 4.1.4.6
+
+::: {.callout-caution}
+## Task
+
+Enter the ~/.ssh/ folder and create an SSH key and a config file, then upload the key to the Helix cluster.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+mkdir ~/.ssh
+cd ~/.ssh
+ssh-keygen –t rsa
+```
+
+When prompted:
+
+- Press the Return key to accept the default location of the SSH key pair.
+- Press the Return key to leave the passphrase blank.
+- Press the Return key to confirm the blank passphrase.
+
+Then type:
+
+```bash
+nano config
+```
+
+In the interactive Terminal text editor, adapt the following lines with your own username and add the lines:
+
+```txt
+Host helix1
+  Hostname phpgridzlogn001.int.corp.gel.ac
+  User username@corp.gel.ac
+  IdentityFile ~/.ssh/id_rsa
+
+Host helix2
+  Hostname phpgridzlogn002.int.corp.gel.ac
+  User username@corp.gel.ac
+  IdentityFile ~/.ssh/id_rsa
+```
+
+Then exit and save the file, and in the Terminal prompt, type:
+
+```bash
+ssh helix1
+```
+
+On your first connection, you will need to type `yes` and press the Return key to confirm.
+
+When prompted for your password, type it (for privacy, what you type will not be displayed).
+
+Then type, successively:
+
+```bash
+logout
+ssh-copy-id helix1
+```
+
+The `ssh-copy-id` command copies the public SSH key to the `helix` host.
+
+When prompted for your password, type it and press the `Return` key.
+
+## Exercise 4.1.4.7
+
+::: {.callout-caution}
+## Task
+
+Connect to the Helix cluster using the key and ssh shortcut.
+:::
+
+In the Terminal application, type:
+
+```bash
+ssh helix1
+```
+
+This time, you should not be prompted for a password anymore.
+
+## Exercise 4.1.4.8
+
+::: {.callout-caution}
+## Task
+
+List the available modules on the Helix cluster.
+:::
+
+In the Terminal application, on the helix cluster, type:
+
+```bash
+module avail
+```
+
+::: {.callout-note}
+## Learn more
+
+The `module avail` command is used to list modules available on the system.
+:::
+
+## Exercise 4.1.4.9
+
+::: {.callout-caution}
+## Task
+
+Load the bio/FastQC module and use the which command to confirm it has worked. Look at the system path, then unload the module and check it again.
+:::
+
+In the Terminal application, on the helix cluster, type successively:
+
+```bash
+module load bio/FastQC
+which fastqc
+echo $PATH
+module list
+module unload bio/FastQC
+which fastqc
+echo $PATH
+module list
+```
+
+Press the Return key after each command.
+
+::: {.callout-note}
+## Learn more
+
+The `module load` command is used to load modules by name.
+
+The `which` command is used to print the location of the first executable for the command `fastqc` found on the PATH (the list of locations where the system searches for executable files when you type a command).
+
+The `echo` command is used to print the value of the `PATH` variable.
+
+The `module list` command prints the list of modules currently loaded.
+
+The `module unload` command removes modules from the list of modules loaded.
+:::
+
+## Exercise 4.1.4.10
+
+::: {.callout-caution}
+## Task
+
+Create a symbolic link called `re_gecip` in your home directory, linking to /re_gecip.
+:::
+
+In the Terminal application, type successively:
+
+```bash
+cd
+ln -s /re_gecip .
+ls -l
+```
+
+::: {.callout-note}
+## Learn more
+
+The `ln` command with option `-s` creates a symbolic link.
+
+The first argument is the filepath that the link points to.
+
+The second argument is the location where the link is created (in this case, the current working directory).
+
+The final `ls -l` command is used here to confirm that the link was created successfully.
+
+You will now be able to use the same path ~/re_gecip in the research environment and on the helix cluster, even though the location on the helix cluster is different.
+:::
+
+## Exercise 4.1.4.11
+
+::: {.callout-caution}
+## Task
+
+In your .bashrc file on the Helix cluster, add the following lines.
+
+```bash
+export USERNAME=$(echo $USER | sed "s/@corp.gel.ac//")
+alias la='ls -alhF'
+alias pcm='cd ~/re_gecip/oxford_precision_cancer/$USERNAME; pwd; ls;'
+```
+:::
+In the Terminal application, on the helix cluster, type successively:
+
+```bash
+cd
+nano .bashrc
+```
+
+Press the Return key after each command.
+
+In the interactive text editor, add the following lines to the file:
+    
+```bash
+export USERNAME=$(echo $USER | sed "s/@corp.gel.ac//")
+alias la='ls -alhF'
+alias pcm='cd ~/re_gecip/oxford_precision_cancer/$USERNAME; pwd; ls;'
+```
+
+Then, exit and save the file.
+
+::: {.callout-note}
+## Learn more
+
+The `export` command creates and makes the new environment variable `USERNAME` available in any terminal environment on the helix cluster.
+
+In this case, the `USERNAME` environment variable is necessary to simplify the more complex username on helix "username@corp.gel.ac" to "username".
+
+The path of the `pcm` alias is further edited to use the newly created environment variable `USERNAME`, to match the name of the directory that you previously created in the research environment.
+:::
+
