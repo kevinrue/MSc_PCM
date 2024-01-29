@@ -1,10 +1,20 @@
 ---
 title: Tutorial 4.1 - Answers
 format:
-  html: default
-  pdf: default
+  html:
+    toc: true
+    toc-depth: 2
+    toc-expand: 1
+    embed-resources: true
+  pdf:
+    toc: true
+    toc-depth: 3
 editor: source
 ---
+
+<!-- Page break after table of contents -->
+
+{{< pagebreak >}}
 
 ::: {.callout-tip}
 ## N.B.
@@ -34,7 +44,7 @@ Use the information lecture 4.1.1 to complete the following exercises on the Gen
 Please take a note of the Linux commands you use to answer each question.
 :::
 
-## Exercise 4.1.1.1
+### Exercise 4.1.1.1
 
 ::: {.callout-caution}
 ## Task
@@ -56,7 +66,7 @@ Click the `Sign In` button. Wait a moment for the virtual desktop to load in you
 
 In the virtual desktop, double click the `Terminal Emulator`.
 
-## Exercise 4.1.1.2
+### Exercise 4.1.1.2
 
 ::: {.callout-caution}
 ## Task
@@ -78,7 +88,7 @@ Then, press the Return key.
 The `pwd` command stands for prints working directory, and display the directory where the Terminal session is currently located.
 :::
 
-## Exercise 4.1.1.3
+### Exercise 4.1.1.3
 
 ::: {.callout-caution}
 ## Task
@@ -102,7 +112,7 @@ The `ls` command lists files in the current directory.
 The `-a` option requests that all files be listed, including hidden files (file names that begin with `.` are generally hidden).
 :::
 
-## Exercise 4.1.1.4
+### Exercise 4.1.1.4
 
 ::: {.callout-caution}
 ## Task
@@ -129,7 +139,7 @@ The `~` symbol represent your home directory on the system. For instance, `/home
 If you have multiple Terminal sessions open, each session has its own working directory, and changing the working in one session does not affect the other sessions.
 :::
 
-## Exercise 4.1.1.5
+### Exercise 4.1.1.5
 
 ::: {.callout-caution}
 ## Task
@@ -157,7 +167,7 @@ The `$USER` environment variable is different for each user; it takes the value 
 Next, the `cd` command is used to change directory into the newly created directory.
 :::
 
-## Exercise 4.1.1.6
+### Exercise 4.1.1.6
 
 ::: {.callout-caution}
 ## Task
@@ -186,7 +196,7 @@ In this context, it requests that the copy is made in the current directory.
 At this point in the exercise, the current directory should be your personal directory.
 :::
 
-## Exercise 4.1.1.7
+### Exercise 4.1.1.7
 
 ::: {.callout-caution}
 ## Task
@@ -225,7 +235,7 @@ The `less` command opens a program similar to `more` but with many more features
 The `less` command is largely preferred over the `more` command. To leave the program press the `Q` key.
 :::
 
-## Exercise 4.1.1.8
+### Exercise 4.1.1.8
 
 ::: {.callout-caution}
 ## Task
@@ -253,7 +263,7 @@ The `ls -lhF` command lists files:
 - Indicating the type of each file by a symbol, using the option `-F` (types include file, directory, link, etc).
 :::
 
-## Exercise 4.1.1.9
+### Exercise 4.1.1.9
 
 ::: {.callout-caution}
 ## Task
@@ -269,7 +279,7 @@ mkdir test
 
 Then, press the Return key.
 
-## Exercise 4.1.1.10
+### Exercise 4.1.1.10
 
 ::: {.callout-caution}
 ## Task
@@ -296,7 +306,7 @@ The `..` alias stands for the parent directory of the working directory.
 If the second argument of the command refers to a location that does not currently exist on the system, the command will take it as the name of the new copy of the file.
 :::
 
-## Exercise 4.1.1.11
+### Exercise 4.1.1.11
 
 ::: {.callout-caution}
 ## Task
@@ -329,7 +339,7 @@ The `nano` program can be used to edit text files within the Terminal applicatio
 The program has many features and keyboard shortcuts that take time to learn but make it an extremely efficient method to rapidly write and edit text files.
 :::
 
-## Exercise 4.1.1.12
+### Exercise 4.1.1.12
 
 ::: {.callout-caution}
 ## Task
@@ -351,7 +361,7 @@ Then, press the Return key.
 The `mv` command stands for move. That being said, renaming a file is akin to moving the contents of the file from one file name to another.
 :::
 
-## Exercise 4.1.1.13
+### Exercise 4.1.1.13
 
 ::: {.callout-caution}
 ## Task
@@ -402,7 +412,7 @@ Use the information lecture 4.1.2 to complete the following exercises on the Gen
 Please take a note of the Linux commands you use to answer each question.
 :::
 
-## Exercise 4.1.2.1
+### Exercise 4.1.2.1
 
 ::: {.callout-caution}
 ## Task
@@ -426,7 +436,7 @@ First, set the working directory to your personal course folder.
 Then, copy the file to the working directory (which you just set).
 :::
 
-## Exercise 4.1.2.2
+### Exercise 4.1.2.2
 
 ::: {.callout-caution}
 ## Task
@@ -452,7 +462,7 @@ The `tar` command is an archiving utility that can be used to compress or decomp
 - The `-f` option declares the file that contains the compressed archive.
 :::
 
-## Exercise 4.1.2.3
+### Exercise 4.1.2.3
 
 ::: {.callout-caution}
 ## Task
@@ -480,7 +490,7 @@ The `*` symbol matches any set of characters in file names.
 As a result, the regular expression `*.tsv` matches all the file names that end with `.tsv` in the working directory.
 :::
 
-## Exercise 4.1.2.4
+### Exercise 4.1.2.4
 
 ::: {.callout-caution}
 ## Task
@@ -516,7 +526,7 @@ Finally, the `head` command is used again to examine the first part of the compr
 The compressed file looks like gibberish as it is not meant to be human readable anymore.
 :::
 
-## Exercise 4.1.2.5
+### Exercise 4.1.2.5
 
 ::: {.callout-caution}
 ## Task
@@ -539,7 +549,7 @@ The `gunzip` command is used to decompress compressed archive files.
 Implicitely, the command removes the compressed file after execution, and also removes the `.gz` extension from the decompressed file.
 :::
 
-## Exercise 4.1.2.6
+### Exercise 4.1.2.6
 
 ::: {.callout-caution}
 ## Task
@@ -564,7 +574,7 @@ First, the `grep` command is used to extract lines that contain the pattern `chr
 The result is written to a new file. Then, the `head` and `tail` commands are used to inspect the first and last parts of the new file.
 :::
 
-## Exercise 4.1.2.7
+### Exercise 4.1.2.7
 
 ::: {.callout-caution}
 ## Task
@@ -592,7 +602,7 @@ The result is saved in a new file.
 Next, the `wc` command is used to display the number of lines in all files with the extension `.tsv`.
 :::
 
-## Exercise 4.1.2.8
+### Exercise 4.1.2.8
 
 ::: {.callout-caution}
 ## Task
@@ -622,7 +632,7 @@ The `sort` command is essential prior to the the `uniq` command, as the latter o
 In other words, if the values were not sorted, the `uniq` command may start counting from 1 multiple times for the same values.
 :::
 
-## Exercise 4.1.2.9
+### Exercise 4.1.2.9
 
 ::: {.callout-caution}
 ## Task
@@ -654,7 +664,7 @@ The second argument is the name of the file that should be processed for the sub
 Finally, the result of the substitution is written to a different file.
 :::
 
-## Exercise 4.1.2.10
+### Exercise 4.1.2.10
 
 ::: {.callout-caution}
 ## Task
@@ -678,7 +688,7 @@ Similarly, the `sed` command is used here to replace tabulation symbols (represe
 Again, the result is written to a different file (note the different file extension, `tsv` for the input file and `csv` for the output file.
 :::
 
-## Exercise 4.1.2.11
+### Exercise 4.1.2.11
 
 ::: {.callout-caution}
 ## Task
@@ -702,7 +712,7 @@ Again, the `sed` command is used, here to replace the "start of line" character 
 Once more, the result is written to a new file.
 :::
 
-## Exercise 4.1.2.12
+### Exercise 4.1.2.12
 
 ::: {.callout-caution}
 ## Task
@@ -730,7 +740,7 @@ The result is passed to the `wc` command with option `-l` to count the number of
 The last time we ran this command, the result was 41.
 :::
 
-## Exercise 4.1.2.13
+### Exercise 4.1.2.13
 
 ::: {.callout-caution}
 ## Task
@@ -770,7 +780,7 @@ Use the information lecture 4.1.3 to complete the following exercises on the Gen
 Please take a note of the Linux commands you use to answer each question.
 :::
 
-## Exercise 4.1.3.1
+### Exercise 4.1.3.1
 
 ::: {.callout-caution}
 ## Task
@@ -792,7 +802,7 @@ Then, press the Return key.
 The `sleep` command is given the number of seconds that the process is requested to wait for.
 :::
 
-## Exercise 4.1.3.2
+### Exercise 4.1.3.2
 
 ::: {.callout-caution}
 ## Task
@@ -818,7 +828,7 @@ Then, press the Return key.
 The `bg` command is used to move jobs to the background. Those jobs continue to run without while the Terminal prompt remains available to type new commands.
 :::
 
-## Exercise 4.1.3.3
+### Exercise 4.1.3.3
 
 ::: {.callout-caution}
 ## Task
@@ -840,7 +850,7 @@ Then, press the Return key.
 The `ps` command is used to report a snapshot of currently running processes.
 :::
 
-## Exercise 4.1.3.4
+### Exercise 4.1.3.4
 
 ::: {.callout-caution}
 ## Task
@@ -862,7 +872,7 @@ Then, press the Return key.
 The `&` symbol is used to immediately move the process running a command to the background, without the need to invoke the `bg` command.
 :::
 
-## Exercise 4.1.3.5
+### Exercise 4.1.3.5
 
 ::: {.callout-caution}
 ## Task
@@ -896,7 +906,7 @@ The kill command is used to terminate a process.
 The first argument of the command is the identifier of the job to kill.
 :::
 
-## Exercise 4.1.3.6
+### Exercise 4.1.3.6
 
 ::: {.callout-caution}
 ## Task
@@ -922,7 +932,7 @@ While the prompt is busy running the command:
 The combination of `Control` and `C` is used to terminate commands that are currently running in the foreground of a Terminal session.
 :::
 
-## Exercise 4.1.3.7
+### Exercise 4.1.3.7
 
 ::: {.callout-caution}
 ## Task
@@ -949,7 +959,7 @@ The `killall` command is used to terminate processes by name.
 Here it is used to simultaneously terminate all jobs running the command `sleep`.
 :::
 
-## Exercise 4.1.3.8
+### Exercise 4.1.3.8
 
 ::: {.callout-caution}
 ## Task
@@ -975,7 +985,7 @@ To quit the application:
 
 - Press the `Q` key.
 
-## Exercise 4.1.3.9
+### Exercise 4.1.3.9
 
 ::: {.callout-caution}
 ## Task
@@ -1003,7 +1013,7 @@ To quit the application:
 
 - Press the `Q` key.
 
-## Exercise 4.1.3.10
+### Exercise 4.1.3.10
 
 ::: {.callout-caution}
 ## Task
@@ -1025,7 +1035,7 @@ To quit the application:
 
 - Press the `Q` key.
 
-## Exercise 4.1.3.11
+### Exercise 4.1.3.11
 
 ::: {.callout-caution}
 ## Task
@@ -1051,7 +1061,7 @@ In this case, the command profiled is `wc -l grch38.tsv`.
 The option `-v` is used to make the `/usr/bin/time` command more verbose, printing as much information as possible.
 :::
 
-## Exercise 4.1.3.12
+### Exercise 4.1.3.12
 
 ::: {.callout-caution}
 ## Task
@@ -1087,7 +1097,7 @@ Use the information lecture 4.1.4 to complete the following exercises on the Gen
 Please take a note of the Linux commands you use to answer each question.
 :::
 
-## Exercise 4.1.4.1
+### Exercise 4.1.4.1
 
 ::: {.callout-caution}
 ## Task
@@ -1124,7 +1134,7 @@ The command `cd` without argument sets the working directory to your home direct
 The command `nano` is used to launch an interactive Terminal text editor, to edit the file `.bashrc` in the working directory.
 :::
 
-## Exercise 4.1.4.2
+### Exercise 4.1.4.2
 
 ::: {.callout-caution}
 ## Task
@@ -1138,7 +1148,7 @@ Similarly, add the following line to your `.bashrc` file:
 alias pcm='cd ~/re_gecip/oxford_precision_cancer/$USER/; pwd; ls'
 ```
 
-## Exercise 4.1.4.3
+### Exercise 4.1.4.3
 
 ::: {.callout-caution}
 ## Task
@@ -1155,7 +1165,7 @@ pcm
 
 Press the Return key after each command.
 
-## Exercise 4.1.4.4
+### Exercise 4.1.4.4
 
 ::: {.callout-caution}
 ## Task
@@ -1179,7 +1189,7 @@ In the interactive text editor, add the lines:
 
 Then exit the program and save the file.
 
-## Exercise 4.1.4.5
+### Exercise 4.1.4.5
 
 ::: {.callout-caution}
 ## Task
@@ -1192,7 +1202,7 @@ In the Terminal application:
 - Start typing the first few characters of a command that you ran earlier.
 - Press the up arrow key to find the previous command.
 
-## Exercise 4.1.4.6
+### Exercise 4.1.4.6
 
 ::: {.callout-caution}
 ## Task
@@ -1255,7 +1265,7 @@ The `ssh-copy-id` command copies the public SSH key to the `helix` host.
 
 When prompted for your password, type it and press the `Return` key.
 
-## Exercise 4.1.4.7
+### Exercise 4.1.4.7
 
 ::: {.callout-caution}
 ## Task
@@ -1271,7 +1281,7 @@ ssh helix1
 
 This time, you should not be prompted for a password anymore.
 
-## Exercise 4.1.4.8
+### Exercise 4.1.4.8
 
 ::: {.callout-caution}
 ## Task
@@ -1291,7 +1301,7 @@ module avail
 The `module avail` command is used to list modules available on the system.
 :::
 
-## Exercise 4.1.4.9
+### Exercise 4.1.4.9
 
 ::: {.callout-caution}
 ## Task
@@ -1328,7 +1338,7 @@ The `module list` command prints the list of modules currently loaded.
 The `module unload` command removes modules from the list of modules loaded.
 :::
 
-## Exercise 4.1.4.10
+### Exercise 4.1.4.10
 
 ::: {.callout-caution}
 ## Task
@@ -1358,7 +1368,7 @@ The final `ls -l` command is used here to confirm that the link was created succ
 You will now be able to use the same path ~/re_gecip in the research environment and on the helix cluster, even though the location on the helix cluster is different.
 :::
 
-## Exercise 4.1.4.11
+### Exercise 4.1.4.11
 
 ::: {.callout-caution}
 ## Task
