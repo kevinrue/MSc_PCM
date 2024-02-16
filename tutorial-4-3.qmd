@@ -1,0 +1,293 @@
+---
+title: "Tutorial 4.3 - Answers"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-expand: 1
+    embed-resources: true
+  pdf:
+    toc: true
+    toc-depth: 3
+editor: source
+---
+
+<!-- Page break after table of contents -->
+
+{{< pagebreak >}}
+
+::: {.callout-tip}
+## N.B.
+
+Anything in <span style="color:red;">red</span> is to be adapted and replaced in the answers below (e.g., substitute with your own username). 
+
+Amazon WorkSpace provides a remote virtual desktop which simulates a MS Windows keyboard layout. Mac users should use the following keyboard combinations for special characters:
+
+- To type `\`, simultaneously press `` ` `` (next to the Return left Shift key).
+- To type `#`, simultaneously press `\` (next to the Return left Shift key).
+- To type `~`, simultaneously press `Shift` and `\` (next to the Return key).
+- To type `|`, simultaneously press `Shift` and `` ` `` (next to the Return left Shift key).
+
+For all users:
+
+- The keyboard shortcut for copying text is `Control` and `Shift` and `C`.
+- The keyboard shortcut for pasting text is `Control` and `Shift` and `V`.
+:::
+
+## Exercise 4.3.2
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.3.2 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+### Exercise 4.3.2.1
+
+::: {.callout-caution}
+## Task
+
+Run GATK on the Tumour and Normal BAM files that have been processed with BQSR.
+
+- Do not include a panel of normals or the allele frequency options.
+- Run the job on the cluster using a job submission script.
+- This job takes up to 80 minutes to run and requires 8 CPUs and 14GB memory.
+- Select the interval for the TP53 gene using the -L option.
+- Run a second job on just this region and note the difference in resource use.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+mkdir tutorial_3
+cd tutorial_3
+nano 4.3.2.1-mutect2.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3/4.3.2.1-mutect2.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3/4.3.2.1-mutect2.%J.err
+#BSUB -J 4.3.2.1-mutect2
+#BSUB -R "rusage[mem=14000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 14000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3
+
+module load bio/GATK
+
+gatk \
+  --java-options "-Xmx14g" Mutect2 \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  -I ../mapping2/tumour.bqsr.bam \
+  -I ../mapping2/normal.bqsr.bam \
+  -normal normal \
+  --disable-read-filter MateOnSameContigOrNoMappedMateReadFilter \
+  -L chr17 \
+  -O output_filename_1.vcf.gz \
+  -bamout output_filename_1.bam
+```
+
+::: {.callout-note}
+## Learn more
+
+The line `#BSUB -cwd /re_gecip/FILEPATH` is used to set the working directory where the program will run during the job.
+Most programs look for input files and write output files relative to the working directory.
+This means that some programs will not need full file paths.
+
+The `gatk` command is spread over multiple lines of code using the `\` symbol ('backslash'), but it is all the same single command.
+The newline character is usually interpreted as the end of a command.
+To get around this, the backslash symbol escapes the newline character, telling the job to continue reading the command on the next line.
+
+Jobs running on smaller regions of the genome usually take fewer resources. 
+:::
+
+To submit the job, in the Terminal application, type:
+
+```
+bsub < 4.3.2.1-mutect2.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Expected output files:
+
+```
+output_filename_1.vcf.gz
+```
+
+Example output available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.3/output_filename_1.vcf.gz
+```
+:::
+
+
+### Exercise 4.3.2.2
+
+::: {.callout-caution}
+## Task
+
+Filter your data using FilterMutectCalls.
+
+- Use the full chromosome 17.
+- Do not include the contamination table.
+- Run the job on the cluster using a job submission script.
+- Ensure that you specify the reference genome with the `-R` flag.
+- This step is quick (5 minutes).
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/tutorial_3
+nano 4.3.2.2-filter.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3/4.3.2.2-filter.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3/4.3.2.2-filter.%J.err
+#BSUB -J 4.3.2.2-filter
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 4
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/tutorial_3
+
+module load bio/GATK
+
+gatk FilterMutectCalls \
+  -V output_filename_1.vcf.gz \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  -O output_filename_2.vcf.gz
+```
+
+::: {.callout-note}
+## Learn more
+
+The VCF file on the line `-V output_filename_1.vcf.gz` is the file that was produced in the previous step.
+:::
+
+To submit the job, in the Terminal application, type:
+
+```
+bsub < 4.3.2.2-filter.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+output_filename_2.vcf.gz
+```
+
+Example file available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.3/output_filename_2.vcf.gz
+```
+:::
+
+### Exercise 4.3.2.3
+
+::: {.callout-caution}
+## Task
+
+Examine the variants that have passed the filtering stage.
+
+- Extract the variants that have passed the filtering into a separate file.
+- Count how many variants you began with and how many you are left with.
+- The Genomics England processed VCF file can be found in `/re_gecip/oxford_precision_cancer/resources/GEL_somatic.vcf`
+- Extract the Genomics England variants that have passed the filter.
+- Compare the counts of mutations in both files.
+- What options other than PASS are provided in the Genomics England file for filtering?
+- NOTE: The Genomics England file has also been annotated, we will discuss this in future lectures.
+:::
+
+In the Terminal application, type:
+
+```
+zcat output_filename_2.vcf.gz | grep PASS > chr17_pass.vcf
+```
+
+Then, type:
+
+```
+grep -v -c '#' chr17_pass.vcf 
+```
+
+The expected output of this last command is `447`.
+
+To filter the Genomics England processed VCF file, type:
+
+```
+grep PASS /re_gecip/oxford_precision_cancer/resources/vcf/GEL_somatic.vcf > GEL_somatic_pass.vcf
+```
+
+Then, type:
+
+```
+grep -v -c '#' GEL_somatic_pass.vcf
+```
+
+The expected output of this last command is `594`.
+
+Finally, type:
+
+```
+grep -v '#' /re_gecip/oxford_precision_cancer/resources/vcf/GEL_somatic.vcf | cut -f 7 | sort | uniq -c
+```
+
+The expected output of this last command is:
+
+```
+      1 BCNoiseIndel
+     34 BCNoiseIndel;QSI_ref
+  17741 LowQscore
+      1 LowQuality
+    594 PASS
+    718 QSI_ref
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+chr17_pass.vcf
+GEL_somatic_pass.vcf
+```
+
+Example file available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.3/chr17_pass.vcf
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.3/GEL_somatic_pass.vcf
+```
+:::
