@@ -1,0 +1,2027 @@
+---
+title: "Tutorial 4.3 - Answers"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    toc-expand: 1
+    embed-resources: true
+  pdf:
+    toc: true
+    toc-depth: 3
+editor: source
+---
+
+<!-- Page break after table of contents -->
+
+{{< pagebreak >}}
+
+::: {.callout-tip}
+## N.B.
+
+Anything in red</span> is to be adapted and replaced in the answers below (e.g., substitute with your own username). 
+
+Amazon WorkSpace provides a remote virtual desktop which simulates a MS Windows keyboard layout. Mac users should use the following keyboard combinations for special characters:
+
+- To type `\`, simultaneously press `` ` `` (next to the Return left Shift key).
+- To type `#`, simultaneously press `\` (next to the Return left Shift key).
+- To type `~`, simultaneously press `Shift` and `\` (next to the Return key).
+- To type `|`, simultaneously press `Shift` and `` ` `` (next to the Return left Shift key).
+
+For all users:
+
+- The keyboard shortcut for copying text is `Control` and `Shift` and `C`.
+- The keyboard shortcut for pasting text is `Control` and `Shift` and `V`.
+:::
+
+## Exercise 4.2.1
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.2.1 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+### Exercise 4.2.1.1
+
+::: {.callout-caution}
+## Task
+
+Log into the Helix cluster using SSH.
+:::
+
+In the Terminal application, type:
+
+```
+ssh helix1
+```
+
+### Exercise 4.2.1.2
+
+::: {.callout-caution}
+## Task
+
+Inspect the computational resources available on the Helix cluster.
+:::
+
+In the Terminal application, type:
+
+```
+lshosts -w
+```
+
+::: {.callout-note}
+## Learn more
+
+The `lshosts` command is used to display hosts (i.e., cluster nodes) available, along with their respective static resource information.
+:::
+
+### Exercise 4.2.1.3
+
+::: {.callout-caution}
+## Task
+
+Inspect the queues available on the Helix cluster.
+:::
+
+In the Terminal application, type:
+
+```
+bqueues
+```
+
+::: {.callout-note}
+## Learn more
+
+The `bqueues` command is used to display information about queues available on the cluster.
+:::
+
+### Exercise 4.2.1.4
+
+::: {.callout-caution}
+## Task
+
+Check the current cluster load.
+:::
+
+In the Terminal application, type:
+
+```
+lsload
+```
+
+::: {.callout-note}
+## Learn more
+
+The `lsload` command is used to display the load information for the cluster.
+:::
+
+### Exercise 4.2.1.5
+
+::: {.callout-caution}
+## Task
+
+Submit a sleep job to the short queue using `bsub` on the command line.
+:::
+
+In the Terminal application, type:
+
+```
+bsub -q short -P re_gecip_oxford_precision_cancer sleep 300
+```
+
+::: {.callout-note}
+## Learn more
+
+The `bsub` command is used to submit commands as jobs to a queue on the helix cluster.
+
+The `-q` option is used to specify the queue to submit the job to.
+
+The `-P` option is used to assign the job to the specified project.
+
+The rest of the command is the command to actually run as a job (here `sleep 300`).
+:::
+
+### Exercise 4.2.1.6
+
+::: {.callout-caution}
+## Task
+
+Monitor the progress of the job.
+:::
+
+In the Terminal application, type:
+
+```
+bjobs
+```
+
+You can also type:
+
+```
+bjobs -l
+```
+::: {.callout-note}
+## Learn more
+
+The `bjobs` command is used to display and filter information about jobs on the cluster.
+
+The `-l` flag can be used to display more detailed information in long format (i.e., over multiple lines).
+:::
+
+### Exercise 4.2.1.7
+
+::: {.callout-caution}
+## Task
+
+Cancel the submitted job.
+:::
+
+In the Terminal application, type:
+
+```
+bkill JOBID
+```
+
+::: {.callout-note}
+## Learn more
+
+The `bkill` command is used to terminate jobs.
+
+The command takes one or more job identifiers as arguments and sends a signal to terminate those jobs.
+:::
+
+### Exercise 4.2.1.8
+
+::: {.callout-caution}
+## Task
+
+Submit a new `sleep` job using a job script.
+
+- Copy the job script template found at `/re_gecip/oxford_precision_cancer/resources/hpc/template-job-script.sh`.
+- Specify job requirements (2 CPUs, 1 host, 4GB RAM).
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cp /re_gecip/oxford_precision_cancer/resources/hpc/template-job-script.sh myjob.sh
+nano myjob.sh
+```
+
+::: {.callout-note}
+## Learn more
+
+The `pcm` alias is used to set the working directory in your personal directory.
+
+The `cp` command is used to make a copy of the template job script.
+
+The `nano` command is used to open an interactive text editor to edit the job script.
+:::
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/myjob.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/myjob.%J.err
+#BSUB -J myjob
+#BSUB -R "rusage[mem=4000] span[hosts=1]"
+#BSUB -n 2
+#BSUB -M 4000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username
+
+sleep 5
+```
+
+To submit the job, in the Terminal application, type:
+
+```
+bsub < myjob.sh
+```
+
+::: {.callout-note}
+## Learn more
+
+The `bsub` command is used to submit jobs to the queue on the cluster.
+
+The `<` symbol is used to feed information about the job from the file.
+:::
+
+### Exercise 4.2.1.9
+
+::: {.callout-caution}
+## Task
+
+Monitor the job, and when it has finished examine the output files (`*.err` and `*.out`).
+:::
+
+In the Terminal application, type successively:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `JOBID` by the identifier of the files to examine.
+:::
+
+```
+bjobs
+less myjob.JOBID.err
+less myjob.JOBID.out
+```
+
+::: {.callout-note}
+## Learn more
+
+The `bjobs` command is used to list jobs that are pending or actively running.
+
+Then, the `less` command is used to interactively peruse the log files of the job.
+The files `myjob.JOB_ID.err` and `myjob.JOB_ID.out` contain the output of the standard error and standard output for the job, respectively.
+:::
+
+## Exercise 4.2.2
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.2.2 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+### Exercise 4.2.2.1
+
+::: {.callout-caution}
+## Task
+
+Create a new working directory for your analysis within your personal course directory, called `analysis`.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+mkdir analysis
+cd analysis
+```
+
+::: {.callout-note}
+## Learn more
+
+The `pcm` alias is used to set the working directory in your personal directory.
+
+The `mkdir` command is used to make a new directory.
+
+The `cd` command is used to set the working directory in that newly created directory.
+:::
+
+### Exercise 4.2.2.2
+
+::: {.callout-caution}
+## Task
+
+Make a small test FASTQ file containing the first 10,000 reads for each FASTQ file in `/re_gecip/oxford_precision_cancer/resources/fastq/` in your analysis folder.
+
+- Use the tabulation key to autocomplete each portion of the long file paths (between `/` separators) as you type them.
+- Make sure you compress the small test FASTQ files.
+- This is a simple Linux command and you do not need to submit a job.
+
+:::
+
+In the Terminal application, type successively:
+
+```
+zcat /re_gecip/oxford_precision_cancer/resources/fastq/normal_1.fastq.gz | head -n 4000 | gzip -c > test_normal_1.fastq.gz
+zcat /re_gecip/oxford_precision_cancer/resources/fastq/normal_2.fastq.gz | head -n 4000 | gzip -c > test_normal_2.fastq.gz
+zcat /re_gecip/oxford_precision_cancer/resources/fastq/tumour_1.fastq.gz | head -n 4000 | gzip -c > test_tumour_1.fastq.gz
+zcat /re_gecip/oxford_precision_cancer/resources/fastq/tumour_2.fastq.gz | head -n 4000 | gzip -c > test_tumour_2.fastq.gz
+```
+
+::: {.callout-note}
+## Learn more
+
+For each FASTQ file, the `zcat` command is used to decompress the original FASTQ files.
+
+The result is passed to the `head` command with option `-n 40000` to extract the first 10,000 reads (each read is represented by 4 lines in the FASTQ format).
+
+The result is passed to the `gzip` command to re-compress information, with the option `-c` to direct information to the standard output.
+
+Finally, the `>` symbol is used to write the result in an output file.
+:::
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+test_normal_1.fastq.gz
+test_normal_2.fastq.gz
+test_tumour_1.fastq.gz
+test_tumour_2.fastq.gz
+```
+
+Example files available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/test_normal_1.fastq.gz
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/test_normal_2.fastq.gz
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/test_tumour_1.fastq.gz
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/test_tumour_2.fastq.gz
+```
+:::
+
+### Exercise 4.2.2.3
+
+::: {.callout-caution}
+## Task
+
+Run FastQC on all of the FASTQ files.
+
+- Remember to use the module system to load the FastQC software.
+- Use your analysis folder as your working directory.
+- Save the output in a sub-folder called 'fastqc'.
+- Read the FastQC help page to establish the command structure.
+- Use the test FASTQ files to optimise the command.
+- Run FastQC on the full FASTQ files by submitting a job to the cluster using a job script.
+- Do not copy the full FASTQ files to your personal folder, instead provide the full path to the input files.
+- This job should take about 5 minutes to run and requires less than 1GB RAM.
+- Examine the output HTML reports by opening them using firefox on the Inuvika desktop.
+:::
+
+In the Terminal application, type successively:
+
+```
+module load bio/FastQC
+mkdir fastqc
+fastqc -t 4 -o fastqc test_normal_1.fastq.gz test_normal_2.fastq.gz test_tumour_1.fastq.gz test_tumour_2.fastq.gz
+```
+
+::: {.callout-note}
+## Learn more
+
+The `module load` command is used to make the `fastqc` command available in the Terminal session.
+
+The `mkdir` command is used to create a new directory where you will store the outputs of the FastQC program.
+
+The `fastqc` command is used to process the FASTQ files.
+:::
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+test_normal_1_fastqc.html
+test_normal_1_fastqc.zip
+test_normal_2_fastqc.html
+test_normal_2_fastqc.zip
+test_tumour_1_fastqc.html
+test_tumour_1_fastqc.zip
+test_tumour_2_fastqc.html
+test_tumour_2_fastqc.zip
+```
+
+Example output available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_normal_1_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_normal_1_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_normal_2_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_normal_2_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_tumour_1_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_tumour_1_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_tumour_2_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/test_tumour_2_fastqc.zip
+```
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/fastqc
+firefox test_tumour_1_fastqc.html
+```
+
+::: {.callout-note}
+## Learn more
+
+The `pcm` alias is used to set the working directory in your personal directory.
+
+The `cd` command is used to set the working directory in the directory that contains the outputs of the FastQC program.
+
+The `firefox` command is used to open the HTML report of the FastQC program in the Mozilla Firefox web browser.
+
+Note that the `firefox` command only works in the research environment, not on helix.
+:::
+
+Then, use the `fastqc` command above to write a job script as follows.
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+nano 4.2.2.3-fastqc.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/4.2.2.3-fastqc.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/4.2.2.3-fastqc.%J.err
+#BSUB -J 4.2.2.3-fastqc
+#BSUB -R "rusage[mem=1000] span[hosts=1]"
+#BSUB -n 4
+#BSUB -M 1000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis
+
+module load bio/FastQC
+
+fastqc \
+  -t 4 \
+  -o fastqc \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_2.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_2.fastq.gz
+```
+
+To submit the job, in the Terminal application, type:
+
+```
+bsub < 4.2.2.3-fastqc.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal_1_fastqc.html
+normal_1_fastqc.zip
+normal_2_fastqc.html
+normal_2_fastqc.zip
+tumour_1_fastqc.html
+tumour_1_fastqc.zip
+tumour_2_fastqc.html
+tumour_2_fastqc.zip
+```
+
+Example files available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/normal_1_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/normal_1_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/normal_2_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/normal_2_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/tumour_1_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/tumour_1_fastqc.zip
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/tumour_2_fastqc.html
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/fastqc/tumour_2_fastqc.zip
+```
+:::
+
+### Exercise 4.2.2.4
+
+::: {.callout-caution}
+## Task
+
+Run MultiQC on the fastqc results folder.
+
+- Read the MultiQC manual to establish the command structure.
+- Output the report to the `fastqc` folder.
+- Call the report `multiqc_fastqc.html`.
+- You do not need to submit a job. However, the command might take a minute to complete.
+- Examine the HTML report by opening it using `firefox` on the Inuvika desktop.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+module load bio/MultiQC
+multiqc fastqc -n multiqc_fastqc.html
+```
+
+::: {.callout-note}
+## Learn more
+
+The `pcm` alias is used to set the working directory in your personal directory.
+
+The `cd` command is used to set the working directory in your analysis directory.
+
+The `module load` command is used to make the `multiqc` command available in the Terminal session.
+
+The `multiqc` command is used to process the contents of the `fastqc` directory.
+:::
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+multiqc_fastqc.html
+```
+
+Example files available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/multiqc_fastqc.html
+```
+:::
+
+In a Terminal logged in the research environment (not Helix), type successively:
+
+```
+pcm
+cd analysis
+firefox multiqc_fastqc.html
+```
+
+## Exercise 4.2.3
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.2.3 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+### Exercise 4.2.3.1
+
+::: {.callout-caution}
+## Task
+
+Build a genome index for BWA using the human reference genome fasta file found in `/re_gecip/oxford_precision_cancer/resources/reference_genome`.
+
+- Store the index in a folder called `genome_index` inside your analysis folder.
+- Run as a job on the cluster using a job submission script.
+- This job takes 70 minutes to run and requires 6GB RAM and 4 CPUs.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+mkdir genome_index
+cd genome_index
+cp /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta .
+nano 4.2.3.1-bwa.sh
+```
+
+::: {.callout-note}
+## Learn more
+
+First, the `pcm` alias resets the working directory
+
+Then, the `cd` command changes the working directory.
+
+Then, the `mkdir` command creates a directory for this exercise.
+
+Then, the `cp` command is used to make a copy of the genome FASTA file in the newly created directory.
+
+Finally, the `nano` command is used to open an interactive text editor to edit the job script.
+:::
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/genome_index/4.2.3.1-bwa.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/genome_index/4.2.3.1-bwa.%J.err
+#BSUB -J 4.2.3.1-bwa
+#BSUB -R "rusage[mem=4000] span[hosts=1]"
+#BSUB -n 4
+#BSUB -M 6000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/genome_index
+
+module load bio/BWA
+
+bwa index hg19.fasta
+```
+
+::: {.callout-note}
+## Learn more
+
+The `module load` command is used to make the `bwa` command available in the Terminal session.
+
+The `bwa index` command is used to build an index of the genome sequence stored in the FASTA file.
+:::
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+hg19.fasta.amb
+hg19.fasta.ann
+hg19.fasta.bwt
+hg19.fasta.pac
+hg19.fasta.sa
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/username/analysis/genome_index/hg19.fasta.amb
+/re_gecip/oxford_precision_cancer/username/analysis/genome_index/hg19.fasta.ann
+/re_gecip/oxford_precision_cancer/username/analysis/genome_index/hg19.fasta.bwt
+/re_gecip/oxford_precision_cancer/username/analysis/genome_index/hg19.fasta.pac
+/re_gecip/oxford_precision_cancer/username/analysis/genome_index/hg19.fasta.sa
+```
+:::
+
+### Exercise 4.2.3.2
+
+::: {.callout-caution}
+## Task
+
+Map both pairs of FASTQ files to the reference genome using BWA.
+
+- Run each pair of FASTQ files as a separate job on the cluster using a job submission script.
+- Supply the full path to the input FASTQ files in `/re_gecip/oxford_precision_cancer/resources/fastq`.
+- Use the genome index generated in step one.
+- Use the default mapping parameters.
+- Redirect the output to a SAM file in a new sub-folder called `mapping`.
+- Those jobs takes up to 140 minutes to run and requires 8 CPUs and 8GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+mkdir mapping
+cd mapping
+nano 4.2.3.2-bwa-normal.sh
+```
+
+::: {.callout-note}
+## Learn more
+
+The `mkdir` command is used to create a directory called `mapping` inside the existing `analysis` directory.
+
+The `nano` command is used to open an interactive text editor to edit the job script.
+:::
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.2-bwa-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.2-bwa-normal.%J.err
+#BSUB -J 4.2.3.2-bwa-normal
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping
+
+module load bio/BWA
+
+bwa mem \
+  -t 8 \
+  ../genome_index/hg19.fasta \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_2.fastq.gz \
+  > normal.sam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.2-bwa-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.sam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/normal.sam
+```
+:::
+
+Similarly, repeat the procedure for the tumour files.
+
+In the Terminal application, type:
+
+```
+nano 4.2.3.2-bwa-tumour.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.2-bwa-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.2-bwa-tumour.%J.err
+#BSUB -J 4.2.3.2-bwa-tumour
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping
+
+module load bio/BWA
+
+bwa mem \
+  -t 8 \
+  ../genome_index/hg19.fasta \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_2.fastq.gz \
+  > tumour.sam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.2-bwa-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.sam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/tumour.sam
+```
+:::
+
+### Exercise 4.2.3.3
+
+::: {.callout-caution}
+## Task
+
+Convert your output SAM to BAM and sort by coordinate using SAMtools.
+
+- This job takes up to 60 minutes to run and requires 8 CPUs and 1GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping
+nano 4.2.3.3-samtools-normal.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.3-samtools-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.3-samtools-normal.%J.err
+#BSUB -J 4.2.3.3-samtools-normal
+#BSUB -R "rusage[mem=1000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 1000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping
+
+module load bio/SAMtools
+
+samtools view -@ 8 -b normal.sam > normal.bam
+samtools sort -@ 8 normal.bam > normal.sorted.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.3-samtools-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.bam
+normal.sorted.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/normal.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/normal.sorted.bam
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.3.3-samtools-tumour.sh
+```
+
+Edit the file to look as follows:
+
+::: {.callout-important}
+Make sure that you replace the occurences of `username` by your own username in the lines starting with `#BSUB -o`, `#BSUB -e`, and `#BSUB -cwd`.
+:::
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.3-samtools-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping/4.2.3.3-samtools-tumour.%J.err
+#BSUB -J 4.2.3.3-samtools-tumour
+#BSUB -R "rusage[mem=1000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 1000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping
+
+module load bio/SAMtools
+
+samtools view -@ 8 -b tumour.sam > tumour.bam
+samtools sort -@ 8 tumour.bam > tumour.sorted.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.3-samtools-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.bam
+tumour.sorted.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/tumour.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping/tumour.sorted.bam
+```
+:::
+
+### Exercise 4.2.3.4
+
+::: {.callout-caution}
+## Task
+
+Can you combine steps 2-3 into a single Linux command using Linux pipes?
+
+- This would save us from generating a large intermediate SAM file.
+- Look ahead to the next exercise to also add a command to index the output BAM files.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis
+mkdir mapping2
+cd mapping2
+nano 4.2.3.4-bwa-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.4-bwa-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.4-bwa-normal.%J.err
+#BSUB -J 4.2.3.4-bwa-normal
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/BWA
+module load bio/SAMtools
+
+bwa mem \
+  -t 8 \
+  ../genome_index/hg19.fasta \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/normal_2.fastq.gz \
+  | samtools view -b - \
+  | samtools sort - \
+  > normal.sorted.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.4-bwa-normal.sh
+```
+
+::: {.callout-note}
+## Learn more
+
+The `|` symbol is used to pass the output of the `bwa mem` command directly to the `samtools sort` command.
+
+The `-` symbol is used to make the `samtools sort` command receive information from the standard input rather than a file.
+
+Finally, the binary information is written directly to a BAM file, without the need for an intermediate SAM file.
+
+Both the modules `bio/BWA` and `bio/SAMtools` are loaded, as they are both necessary to execute the combination of commands.
+:::
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.sorted.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.sorted.bam
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.3.4-bwa-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.4-bwa-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.4-bwa-tumour.%J.err
+#BSUB -J 4.2.3.4-bwa-tumour
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/BWA
+module load bio/SAMtools
+
+bwa mem \
+  -t 8 \
+  ../genome_index/hg19.fasta \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_1.fastq.gz \
+  /re_gecip/oxford_precision_cancer/resources/fastq/tumour_2.fastq.gz \
+  | samtools view -b - \
+  | samtools sort - \
+  > tumour.sorted.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.4-bwa-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.sorted.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.sorted.bam
+```
+:::
+
+### Exercise 4.2.3.5
+
+::: {.callout-caution}
+## Task
+
+Index your BAM files using SAMtools.
+
+- This step is quick (5 minutes).
+- Use 8 cores and 8 GB of memory.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.3.5-samtools-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.5-samtools-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.5-samtools-normal.%J.err
+#BSUB -J 4.2.3.5-samtools-normal
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/SAMtools
+
+samtools index -@ 8 normal.sorted.bam
+```
+
+::: {.callout-note}
+## Learn more
+
+The `samtools index` command is used to index the BAM file.
+
+The command implicitly creates a new index file that is named identically to the input BAM file, with an additional `.bai` extension.
+:::
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.5-samtools-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.sorted.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.sorted.bam.bai
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.3.5-samtools-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.5-samtools-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.3.5-samtools-tumour.%J.err
+#BSUB -J 4.2.3.5-samtools-tumour
+#BSUB -R "rusage[mem=8000] span[hosts=1]"
+#BSUB -n 8
+#BSUB -M 8000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/SAMtools
+
+samtools index -@ 8 tumour.sorted.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.3.5-samtools-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.sorted.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.sorted.bam.bai
+```
+:::
+
+### Exercise 4.2.3.6
+
+::: {.callout-caution}
+## Task
+
+Visualise your BAM files using IGV on the Inuvika desktop.
+
+- Start the IGV application
+- Load the reference genome from file
+  - Menu `Genomes`, then `Load Genome from File…`
+  - Navigate to ~/public_data_resources/IGV/hg19/hg19 local.genome and click `Open`
+- Load your BAM files from file
+  - Menu `File`, then `Load from File…`
+  - Navigate to your BAM files, select, and click `Open`
+- Search for TP53 in chromosome 17
+- Zoom in to view the reads
+- Scroll to the next gene
+:::
+
+This is a point and click exercise.
+
+In the Inuvika Desktop:
+
+- Open the `Applications` menu in the bottom left corner.
+- In the menu, click on `IGV Browser`.
+  - If prompted to download a later version of IGV, click `Skip this update` and then click the `OK` button.
+- In the IGV Browser application, open the `Genomes` menu.
+- In the menu, click `Load Genome from File…`.
+- Navigate to the directory `~/public_data_resources/IGV/hg19`, select the file `hg10 local.genome`, and click `Open`.
+- In the IGV Browser application, open the `File menu.
+- In the menu, click on `Load from File…`.
+- Navigate to your BAM files, click on `normal.sorted.bam` to select it, hold the `Control` key and click on `tumour.sorted.bam` to select it as well, and click `Open` when the two files are selected.
+- In the search box at the top of the application on the left of the `Go` button, type `TP53` (without the quotation marks), and click `Go`.
+- Use the `+` button at the top of the application on the far right to zoom in. Use the `-` button to zoom out if you zoomed in too much.
+- Hold a click on the area where reads are displayed, then drag the cursor to the left to move the view to the right until you see the next gene in the `Gene` pane at the bottom of the application.
+
+::: {.callout-note}
+## Learn more
+
+The IGV browser is used to explore genomic data visually and interactively.
+
+Loading a genome file displays the location and structure of known genes.
+
+Loading BAM files display the location of reads aligned to the genome, as well as sequence variation events where nucleotides in the aligned reads differ from the reference genome sequence.
+:::
+
+## Exercise 4.2.4
+
+::: {.callout-tip}
+## Remember
+
+Use the information lecture 4.2.4 to complete the following exercises on the Genomics England Data Centre.
+
+Please take a note of the Linux commands you use to answer each question.
+:::
+
+### Exercise 4.2.4.1
+
+::: {.callout-caution}
+## Task
+
+Add read groups to your BAM files using Picard AddOrReplaceReadGroups.
+
+- Create a new BAM file for each sample using the file ending `.readgroups.bam`.
+- Set the following read groups: `RGID=1 RGLB=lib1 RGPL=ILLUMINA RGLU=lane1 RGSM=normal/tumour`.
+- This job takes up to 20 minutes and requires 2GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.4.1-picard-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.1-picard-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.1-picard-normal.%J.err
+#BSUB -J 4.2.4.1-picard-normal
+#BSUB -R "rusage[mem=2000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 2000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load bio/SAMtools
+
+java -jar -Xmx2g $PICARD AddOrReplaceReadGroups \
+  I=normal.sorted.bam O=normal.readgroups.bam \
+  RGID=1 RGLB=lib1 RGPL=ILLUMINA RGPU=lane1 RGSM=normal
+samtools index normal.readgroups.bam
+```
+
+::: {.callout-note}
+## Learn more
+
+The `java -jar -Xmx2g $PICARD AddOrReplaceReadGroups` command is used to set the assign all the reads in each file to a single new read group.
+:::
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.1-picard-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.readgroups.bam
+normal.readgroups.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.readgroups.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.readgroups.bam.bai
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.4.1-picard-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.1-picard-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.1-picard-tumour.%J.err
+#BSUB -J 4.2.4.1-picard-tumour
+#BSUB -R "rusage[mem=2000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 2000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load bio/SAMtools
+
+java -jar -Xmx2g $PICARD AddOrReplaceReadGroups \
+  I=tumour.sorted.bam O=tumour.readgroups.bam \
+  RGID=1 RGLB=lib1 RGPL=ILLUMINA RGPU=lane1 RGSM=tumour
+samtools index tumour.readgroups.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.1-picard-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.readgroups.bam
+tumour.readgroups.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.readgroups.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.readgroups.bam.bai
+```
+:::
+
+### Exercise 4.2.4.2
+
+::: {.callout-caution}
+## Task
+
+Deduplicate your BAM files using Picard MarkDuplicates.
+
+- Create a new BAM file for each sample using the file ending `.dedup.bam`.
+- Mark rather than removing duplicates.
+- This job takes up to 40 minutes and requires 32GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.4.2-picard-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.2-picard-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.2-picard-normal.%J.err
+#BSUB -J 4.2.4.2-picard-normal
+#BSUB -R "rusage[mem=32000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 32000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load bio/SAMtools
+
+java -jar -Xmx32g $PICARD MarkDuplicates \
+  I=normal.readgroups.bam O=normal.dedup.bam M=normal.dedup.metrics
+samtools index normal.dedup.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.2-picard-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.dedup.bam
+normal.dedup.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.bam.bai
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.4.2-picard-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.2-picard-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.2-picard-tumour.%J.err
+#BSUB -J 4.2.4.2-picard-tumour
+#BSUB -R "rusage[mem=32000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 32000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load bio/SAMtools
+
+java -jar -Xmx32g $PICARD MarkDuplicates \
+  I=tumour.readgroups.bam O=tumour.dedup.bam M=tumour.dedup.metrics
+samtools index tumour.dedup.bam
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.2-picard-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.dedup.bam
+tumour.dedup.bam.bai
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.bam
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.bam.bai
+```
+:::
+
+### Exercise 4.2.4.3
+
+::: {.callout-caution}
+## Task
+
+Run samtools flagstat and idxstats on your deduplicated BAM files.
+
+- These commands can be run in the same job script.
+- This job takes up to 5 minutes to run and requires 1GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.4.3-samtools-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.3-samtools-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.3-samtools-normal.%J.err
+#BSUB -J 4.2.4.3-samtools-normal
+#BSUB -R "rusage[mem=5000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 5000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/SAMtools
+
+samtools flagstat normal.dedup.bam > normal.dedup.flagstat
+samtools idxstats normal.dedup.bam > normal.dedup.idxstats
+```
+
+::: {.callout-note}
+## Learn more
+
+The `samtools flagstat` command summarises number of aligned reads for each flag type.
+
+The `samtools idxstats` summarises alignment summary statistics.
+:::
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.3-samtools-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.dedup.flagstat
+normal.dedup.idxstats
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.flagstat
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.idxstats
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.4.3-samtools-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.3-samtools-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.3-samtools-tumour.%J.err
+#BSUB -J 4.2.4.3-samtools-tumour
+#BSUB -R "rusage[mem=32000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 32000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/SAMtools
+
+samtools flagstat tumour.dedup.bam > tumour.dedup.flagstat
+samtools idxstats tumour.dedup.bam > tumour.dedup.idxstats
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.3-samtools-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.dedup.flagstat
+tumour.dedup.idxstats
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.flagstat
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.idxstats
+```
+:::
+
+### Exercise 4.2.4.4
+
+::: {.callout-caution}
+## Task
+
+Run Picard on your BAM files.
+
+- CollectAlignmentSummaryMetrics.
+- CollectWgsMetrics.
+- CollectInsertSizeMetrics.
+- These commands can be run in the same job script.
+- This job takes up to 30 minutes to run and requires 16GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+cp /re_gecip/oxford_precision_cancer/resources/reference_genome/chromosomes.interval_list .
+nano 4.2.4.4-picard-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.4-picard-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.4-picard-normal.%J.err
+#BSUB -J 4.2.4.4-picard-normal
+#BSUB -R "rusage[mem=16000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 16000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load lang/R
+
+java -jar -Xmx16g $PICARD CollectAlignmentSummaryMetrics \
+  R=/public_data_resources/reference/hg19/ucsc.hg19.fasta.gz \
+  I=normal.dedup.bam O=normal.dedup.align_metrics
+
+java -jar -Xmx16g $PICARD CollectWgsMetrics \
+  R=/public_data_resources/reference/hg19/ucsc.hg19.fasta.gz \
+  I=normal.dedup.bam O=normal.dedup.wgs_metrics \
+  INTERVALS=chromosomes.interval_list
+
+java -jar -Xmx16g $PICARD CollectInsertSizeMetrics \
+  I=normal.dedup.bam O=normal.dedup.isize_metrics \
+  H=normal.dedup.isize_metrics.pdf
+```
+
+::: {.callout-note}
+## Learn more
+
+The `java ...` commands run different Picard tools collecting various alignment metrics.
+:::
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.4-picard-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.dedup.align_metrics
+normal.dedup.wgs_metrics
+normal.dedup.isize_metrics
+normal.dedup.isize_metrics.pdf
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.align_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.wgs_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.isize_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.isize_metrics.pdf
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.4.4-picard-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.4-picard-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.4-picard-tumour.%J.err
+#BSUB -J 4.2.4.4-picard-tumour
+#BSUB -R "rusage[mem=16000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 32000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/picard
+module load lang/R
+
+java -jar -Xmx16g $PICARD CollectAlignmentSummaryMetrics \
+  R=/public_data_resources/reference/hg19/ucsc.hg19.fasta.gz \
+  I=tumour.dedup.bam O=tumour.dedup.align_metrics
+
+java -jar -Xmx16g $PICARD CollectWgsMetrics \
+  R=/public_data_resources/reference/hg19/ucsc.hg19.fasta.gz \
+  I=tumour.dedup.bam O=tumour.dedup.wgs_metrics \
+  INTERVALS=chromosomes.interval_list
+
+java -jar -Xmx16g $PICARD CollectInsertSizeMetrics \
+  I=tumour.dedup.bam O=tumour.dedup.isize_metrics \
+  H=tumour.dedup.isize_metrics.pdf
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.4-picard-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.dedup.align_metrics
+tumour.dedup.wgs_metrics
+tumour.dedup.isize_metrics
+tumour.dedup.isize_metrics.pdf
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.align_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.wgs_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.isize_metrics
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.isize_metrics.pdf
+```
+:::
+
+### Exercise 4.2.4.5
+
+::: {.callout-caution}
+## Task
+
+Run MultiQC on the mapping folder to visualise the mapping and deduplication stats.
+
+- Create a report called multiqc_mapping.html.
+- This job takes up to 2 minutes to run and requires 1GB RAM.
+- View the report using firefox on the Inuvika desktop.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.4.5-multiqc.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.5-multiqc.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.5-multiqc.%J.err
+#BSUB -J 4.2.4.5-multiqc
+#BSUB -R "rusage[mem=16000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 1000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/MultiQC
+
+multiqc . -n multiqc_mapping.html
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.5-multiqc.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+multiqc_mapping.html
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/multiqc_mapping.html
+```
+:::
+
+### Exercise 4.2.4.6
+
+::: {.callout-caution}
+## Task
+
+Perform BQSR on you BAM files to produce analysis ready BAMs.
+
+- You can run both steps in the same job script.
+- Create output in a new sub-folder in the analysis folder called `bqsr`.
+- Create output BAM files with the `.bqsr.bam` file ending.
+- Use the dbSNP_138.hg19.vcf and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf known sites files from `/re_gecip/oxford_precision_cancer/resources/known_sites/`.
+- This job takes up to 40 minutes to run and requires 10GB RAM.
+:::
+
+In the Terminal application, type successively:
+
+```
+pcm
+cd analysis/mapping2
+nano 4.2.4.6-gatk-normal.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.6-gatk-normal.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.6-gatk-normal.%J.err
+#BSUB -J 4.2.4.6-gatk-normal
+#BSUB -R "rusage[mem=10000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 10000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/GATK
+module load lang/R
+
+gatk BaseRecalibrator \
+  -I normal.dedup.bam \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  --known-sites /re_gecip/oxford_precision_cancer/resources/known_sites/dbsnp_138.hg19.vcf \
+  --known-sites /re_gecip/oxford_precision_cancer/resources/known_sites/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf \
+  -O normal.recal_data.table \
+  -L chr17
+
+gatk ApplyBQSR \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  -I normal.dedup.bam \
+  -O normal.bqsr.bam \
+  --bqsr-recal-file normal.recal_data.table
+```
+
+::: {.callout-note}
+## Learn more
+
+The `gatk BaseRecalibrator` command is used to generate a recalibration table for BQSR (base quality score recalibration).
+
+The `gatk ApplyBQSR` command applies quality score recalibration.
+:::
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.6-gatk-normal.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+normal.recal_data.table
+normal.bqsr.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.recal_data.table
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.bqsr.bam
+```
+:::
+
+In the Terminal application, type:
+
+```
+nano 4.2.4.6-gatk-tumour.sh
+```
+
+Edit the file to look as follows:
+
+```
+#!/bin/bash
+#BSUB -q short
+#BSUB -P re_gecip_oxford_precision_cancer
+#BSUB -o /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.6-gatk-tumour.%J.out
+#BSUB -e /re_gecip/oxford_precision_cancer/username/analysis/mapping2/4.2.4.6-gatk-tumour.%J.err
+#BSUB -J 4.2.4.6-gatk-tumour
+#BSUB -R "rusage[mem=10000] span[hosts=1]"
+#BSUB -n 1
+#BSUB -M 10000
+#BSUB -cwd /re_gecip/oxford_precision_cancer/username/analysis/mapping2
+
+module load bio/GATK
+module load lang/R
+
+gatk BaseRecalibrator \
+  -I tumour.dedup.bam \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  --known-sites /re_gecip/oxford_precision_cancer/resources/known_sites/dbsnp_138.hg19.vcf \
+  --known-sites /re_gecip/oxford_precision_cancer/resources/known_sites/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf \
+  -O tumour.recal_data.table \
+  -L chr17
+
+gatk ApplyBQSR \
+  -R /re_gecip/oxford_precision_cancer/resources/reference_genome/hg19.fasta \
+  -I tumour.dedup.bam \
+  -O tumour.bqsr.bam \
+  --bqsr-recal-file tumour.recal_data.table
+```
+
+In the Terminal application, type:
+
+```
+bsub < 4.2.4.6-gatk-tumour.sh
+```
+
+::: {.callout-warning collapse="true"}
+## Problems?
+
+Output files:
+
+```
+tumour.recal_data.table
+tumour.bqsr.bam
+```
+
+Example available at:
+
+```
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.recal_data.table
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.bqsr.bam
+```
+:::
+
+### Exercise 4.2.4.7
+
+::: {.callout-caution}
+## Task
+
+Visualise your processed BAMs in IGV on the Inuvika desktop.
+:::
+
+This is a point and click exercise.
+
+In the Inuvika Desktop:
+
+- Open the `Applications` menu in the bottom left corner.
+- In the menu, click on `IGV Browser`.
+- In the menu, click on `Load from File…`.
+- Navigate to your BAM files, click on `normal.bqsr.bam` to select it, hold the `Control` key and click on `tumour.sorted.bam` to select it as well, and click `Open` when the two files are selected.
+- In the search box at the top of the application on the left of the `Go` button, type `TP53` (without the quotation marks), and click `Go`.
+- Use the `+` button at the top of the application on the far right to zoom in. Use the `-` button to zoom out if you zoomed in too much.
+- Hold a click on the area where reads are displayed, then drag the cursor to the left to move the view to the right until you see the next gene in the `Gene` pane at the bottom of the application.
+
+::: {.callout-note}
+## Learn more
+
+The IGV browser is used to explore genomic data visually and interactively.
+
+Loading a genome file displays the location and structure of known genes.
+
+Loading BAM files display the location of reads aligned to the genome, as well as sequence variation events where nucleotides in the aligned reads differ from the reference genome sequence.
+:::

@@ -268,7 +268,7 @@ The `ls -lhF` command lists files:
 ::: {.callout-caution}
 ## Task
 
-Create a new directory called test within your personal directory.
+Create a new directory called `test` within your personal directory.
 :::
 
 In the Terminal application, type:
