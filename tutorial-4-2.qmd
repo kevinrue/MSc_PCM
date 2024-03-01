@@ -123,7 +123,7 @@ The `lsload` command is used to display the load information for the cluster.
 ::: {.callout-caution}
 ## Task
 
-Submit a sleep job to the short queue using `bsub` on the command line.
+Submit a `sleep` job to the short queue using `bsub` on the command line.
 :::
 
 In the Terminal application, type:
