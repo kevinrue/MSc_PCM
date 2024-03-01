@@ -1451,6 +1451,7 @@ Output files:
 ```
 normal.dedup.bam
 normal.dedup.bam.bai
+normal.dedup.metrics
 ```
 
 Example available at:
@@ -1458,6 +1459,7 @@ Example available at:
 ```
 /re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.bam
 /re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.bam.bai
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/normal.dedup.metrics
 ```
 :::
 
@@ -1503,6 +1505,7 @@ Output files:
 ```
 tumour.dedup.bam
 tumour.dedup.bam.bai
+tumour.dedup.metrics
 ```
 
 Example available at:
@@ -1510,6 +1513,7 @@ Example available at:
 ```
 /re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.bam
 /re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.bam.bai
+/re_gecip/oxford_precision_cancer/answers/tutorial_4.2/analysis/mapping2/tumour.dedup.metrics
 ```
 :::
 
